@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Print Open House Registration</title>
+<!-- No external scripts needed - using honeypot + timestamp anti-spam -->
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  font-size: 15px;
+  color: #333;
+  background: #fff;
+}
+.form-wrapper {
+  max-width: 640px;
+  margin: 0 auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.form-header {
+  background: #fff;
+  color: #333;
+  padding: 24px 28px;
+  text-align: center;
+}
+.form-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  color: #c0392b;
+}
+.form-header p {
+  font-size: 13px;
+  color: #666;
+}
+.form-body {
+  padding: 28px;
+  background: #fff;
+}
+.form-group {
+  margin-bottom: 18px;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #222;
+}
+.form-group label .required {
+  color: #c0392b;
+  margin-left: 2px;
+}
+.form-group .helper {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #c0392b;
+  box-shadow: 0 0 0 2px rgba(192,57,43,0.1);
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: #c0392b;
+}
+.form-group .error-msg {
+  display: none;
+  color: #c0392b;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.form-group.error .error-msg {
+  display: block;
+}
+.row {
+  display: flex;
+  gap: 16px;
+}
+.row .form-group {
+  flex: 1;
+}
+@media (max-width: 500px) {
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .form-body {
+    padding: 20px 16px;
+  }
+  .form-header {
+    padding: 20px 16px;
+  }
+}
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: background 0.2s;
+}
+.btn-submit:hover {
+  background: #a93226;
+}
+.btn-submit:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+.msg-success {
+  display: none;
+  background: #d4edda;
+  color: #155724;
+  padding: 16px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+.msg-error {
+  display: none;
+  background: #f8d7da;
+  color: #721c24;
+  padding: 14px;
+  border-radius: 5px;
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- PALITAN ANG DATES DITO gamit ang Webflow CMS field binding -->
+<!-- Sa Webflow embed: i-click "+" at piliin ang Start Date / End Date / Address fields -->
+<!-- Accepted formats: YYYY-MM-DD, MM/DD/YYYY, MM/DD/YYYY HH:MM AM/PM -->
+<div id="eventDates" data-start="08/11/2026 08:00 AM" data-end="08/15/2026 05:00 PM" data-location="2305 Marconi corner Morse Street, Makati City, Metro Manila" style="display:none;"></div>
+
+<div class="form-wrapper">
+  <div class="form-header">
+    <h1 id="eventTitle">ES Print Open House 2026</h1>
+    <p>Registration Form</p>
+  </div>
+
+  <div class="form-body">
+    <form id="registrationForm" novalidate>
+
+      <div class="form-group">
+        <label>Email Address <span class="required">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com">
+        <span class="error-msg">Please enter a valid email address.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Full Name <span class="required">*</span></label>
+        <span class="helper">As shown on your Government ID</span>
+        <input type="text" id="name" name="name" required>
+        <span class="error-msg">Full Name is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Company Name <span class="required">*</span></label>
+        <span class="helper">Type N/A if not applicable</span>
+        <input type="text" id="company" name="company" required>
+        <span class="error-msg">Company Name is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Industry / Line of Business <span class="required">*</span></label>
+        <select id="industry" name="industry" required>
+          <option value="">— Select —</option>
+          <option value="AGRICULTURE">AGRICULTURE</option>
+          <option value="ARCH & INTERIOR DESIGN">ARCH & INTERIOR DESIGN</option>
+          <option value="AUTOMOTIVE">AUTOMOTIVE</option>
+          <option value="COMPUTER & IT">COMPUTER & IT</option>
+          <option value="CONSTRUCTION">CONSTRUCTION</option>
+          <option value="COOPERATIVE">COOPERATIVE</option>
+          <option value="CORPORATE GIVEAWAYS">CORPORATE GIVEAWAYS</option>
+          <option value="DIGITAL PRINTING">DIGITAL PRINTING</option>
+          <option value="EDUCATION">EDUCATION</option>
+          <option value="ELECTRONICS">ELECTRONICS</option>
+          <option value="FOOD AND BEVERAGE">FOOD AND BEVERAGE</option>
+          <option value="GOVERNMENT">GOVERNMENT</option>
+          <option value="HEALTHCARE">HEALTHCARE</option>
+          <option value="HOBBYIST">HOBBYIST</option>
+          <option value="HOSPITALITY">HOSPITALITY</option>
+          <option value="OFFSET PRINTING">OFFSET PRINTING</option>
+          <option value="PACKAGING">PACKAGING</option>
+          <option value="PHOTO - INHOUSE USE">PHOTO - INHOUSE USE</option>
+          <option value="PHOTO - SERVICE">PHOTO - SERVICE</option>
+          <option value="POLITICIAN">POLITICIAN</option>
+          <option value="SIGNAGE - INHOUSE USE">SIGNAGE - INHOUSE USE</option>
+          <option value="SIGNAGE - SERVICE & FABRICATION">SIGNAGE - SERVICE & FABRICATION</option>
+          <option value="TEXTILE - ACTIVE WEAR">TEXTILE - ACTIVE WEAR</option>
+          <option value="TEXTILE - EXPORT">TEXTILE - EXPORT</option>
+          <option value="TEXTILE - FASHION DESIGNER">TEXTILE - FASHION DESIGNER</option>
+          <option value="TEXTILE - INHOUSE USE">TEXTILE - INHOUSE USE</option>
+          <option value="TEXTILE - RTW/PREMADE">TEXTILE - RTW/PREMADE</option>
+          <option value="TEXTILE - SOFT SIGNAGE">TEXTILE - SOFT SIGNAGE</option>
+          <option value="OTHERS">OTHERS</option>
+        </select>
+        <span class="error-msg">Please select an industry.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Address <span class="required">*</span></label>
+        <span class="helper">Please provide complete address. In case you will be the lucky winner, we will ship your prize to the address provided below. Must present valid ID with address for raffle winners</span>
+        <textarea id="address" name="address" required></textarea>
+        <span class="error-msg">Address is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Contact Number <span class="required">*</span></label>
+        <span class="helper">Input your 11-digit active mobile number ex. 09XXXXXXXXX</span>
+        <input type="text" id="contact" name="contact" required maxlength="11" placeholder="09XXXXXXXXX">
+        <span class="error-msg">Please enter a valid 11-digit mobile number starting with 09.</span>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Choose a day to visit <span class="required">*</span></label>
+          <select id="day" name="day" required>
+            <option value="">— Select —</option>
+            <!-- Options will be auto-generated from data-start and data-end -->
+          </select>
+          <span class="error-msg">Please select a day.</span>
+        </div>
+        <div class="form-group">
+          <label>Preferred Time <span class="required">*</span></label>
+          <select id="time" name="time" required>
+            <option value="">— Select —</option>
+            <option value="Morning (8am to 12nn)">Morning (8am to 12nn)</option>
+            <option value="Afternoon (1pm to 5pm)">Afternoon (1pm to 5pm)</option>
+          </select>
+          <span class="error-msg">Please select a time.</span>
+        </div> 
+      </div>
+
+      <div class="form-group">
+        <label>How many companions will join you? <span class="required">*</span></label>
+        <input type="number" id="companions" name="companions" required min="0" max="20" placeholder="0">
+        <span class="error-msg">Please enter a number between 0 and 20.</span>
+      </div>
+
+      <div class="form-group">
+        <label>What are your existing machines? <span class="required">*</span></label>
+        <input type="text" id="existingMachines" name="existingMachines" required placeholder="">
+        <span class="error-msg">This field is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>What type of printing machine are you interested in? <span class="required">*</span></label>
+        <input type="text" id="interestedIn" name="interestedIn" required placeholder="">
+        <span class="error-msg">This field is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Who invited you? <span class="required">*</span></label>
+        <span class="helper">Ex. Name of Inviter from ES Print</span>
+        <input type="text" id="inviter" name="inviter" required>
+        <span class="error-msg">This field is required.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Where did you learn about this event? <span class="required">*</span></label>
+        <select id="source" name="source" required>
+          <option value="">— Select —</option>
+          <option value="Social Media (Facebook, Instagram, X/Twitter, etc.)">Social Media (Facebook, Instagram, X/Twitter, etc.)</option>
+          <option value="Viber, FB Messenger, WhatsApp">Viber, FB Messenger, WhatsApp</option>
+          <option value="ES Representative - Personal invitation">ES Representative - Personal invitation</option>
+          <option value="Email invitation">Email invitation</option>
+          <option value="SMS invitation">SMS invitation</option>
+          <option value="Friend or Family">Friend or Family</option>
+          <option value="Paid Ads">Paid Ads</option>
+          <option value="Website">Website</option>
+        </select>
+        <span class="error-msg">Please select an option.</span>
+      </div>
+
+      <button type="submit" class="btn-submit" id="btnSubmit">Register Now</button>
+
+      <div class="msg-success" id="msgSuccess">
+        Registration submitted successfully! Thank you! We look forward to seeing you at the event. A confirmation email has been sent to your email address.
+      </div>
+
+      <div class="msg-error" id="msgError"></div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+
+  // Google Apps Script Web App URL
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQ8DViBp2mmYGIJDnrxQIjq1uCp-DRPhqzXCIyIP2UiU-MCRXSvX3yXW7sQofrJ15y/exec';
+
+function getEventFromSlug() {
+  const path = window.location.pathname;
+  const slug = path.split('/').pop() || '';
+  return slug.replace(/-copy$/i, '').split('-').join(' ').toUpperCase().trim() || 'ES Print Open House 2026';
+}
+
+(function() {
+  document.getElementById('eventTitle').textContent = getEventFromSlug();
+  // Auto-generate day options from data-start and data-end attributes
+  var datesEl = document.getElementById('eventDates');
+  if (datesEl) {
+    var startStr = datesEl.getAttribute('data-start');
+    var endStr = datesEl.getAttribute('data-end');
+
+    if (startStr && endStr) {
+      var daySelect = document.getElementById('day');
+
+      // Parse date - supports multiple formats from Webflow CMS
+      function parseDate(str) {
+        str = str.trim();
+        if (!str) return null;
+        
+        // Handle MM/DD/YYYY or MM/DD/YYYY HH:MM AM/PM
+        if (/^\d{1,2}\/\d{1,2}\/\d{4}/.test(str)) {
+          var parts = str.split(/[\s\/]/);
+          return new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+        }
+        // Handle "August 11, 2026" or "Aug 11, 2026" (Webflow long format)
+        if (/^[A-Za-z]/.test(str)) {
+          var d = new Date(str);
+          if (!isNaN(d.getTime())) return d;
+        }
+        // Handle ISO format "2026-08-11T08:00:00" or "2026-08-11"
+        if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+          return new Date(str.substring(0, 10) + 'T00:00:00');
+        }
+        // Fallback: let browser try to parse it
+        var d = new Date(str);
+        if (!isNaN(d.getTime())) return d;
+        return null;
+      }
+
+      var startDate = parseDate(startStr);
+      var endDate = parseDate(endStr);
+
+      if (startDate && endDate) {
+        var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        var current = new Date(startDate);
+        while (current <= endDate) {
+          var monthName = monthNames[current.getMonth()];
+          var dayNum = current.getDate();
+          var dayName = dayNames[current.getDay()];
+          var label = monthName + ' ' + dayNum + ' | ' + dayName;
+
+          var option = document.createElement('option');
+          option.value = label;
+          option.textContent = label;
+          daySelect.appendChild(option);
+
+          current.setDate(current.getDate() + 1);
+        }
+      }
+    }
+  }
+})();
+
+const form = document.getElementById('registrationForm');
+const btnSubmit = document.getElementById('btnSubmit');
+const msgSuccess = document.getElementById('msgSuccess');
+const msgError = document.getElementById('msgError');
+
+function clearErrors() {
+  const groups = form.querySelectorAll('.form-group.error');
+  groups.forEach(function(g) { g.classList.remove('error'); });
+  msgError.style.display = 'none';
+}
+
+function showError(fieldId, msg) {
+  const field = document.getElementById(fieldId);
+  const group = field.closest('.form-group');
+  group.classList.add('error');
+  if (msg) {
+    group.querySelector('.error-msg').textContent = msg;
+  }
+}
+
+function validate() {
+  clearErrors();
+  var firstInvalid = null;
+  var valid = true;
+
+  var email = document.getElementById('email').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showError('email'); valid = false;
+    if (!firstInvalid) firstInvalid = 'email';
+  }
+
+  var name = document.getElementById('name').value.trim();
+  if (!name) {
+    showError('name'); valid = false;
+    if (!firstInvalid) firstInvalid = 'name';
+  }
+
+  var company = document.getElementById('company').value.trim();
+  if (!company) {
+    showError('company'); valid = false;
+    if (!firstInvalid) firstInvalid = 'company';
+  }
+
+  var industry = document.getElementById('industry').value;
+  if (!industry) {
+    showError('industry'); valid = false;
+    if (!firstInvalid) firstInvalid = 'industry';
+  }
+
+  var address = document.getElementById('address').value.trim();
+  if (!address) {
+    showError('address'); valid = false;
+    if (!firstInvalid) firstInvalid = 'address';
+  }
+
+  var contactInput = document.getElementById('contact');
+  var rawContact = contactInput.value.trim().replace(/[\s\-\(\)\.]/g, '');
+  if (rawContact.startsWith('+63')) {
+    rawContact = '0' + rawContact.substring(3);
+  } else if (rawContact.startsWith('63') && rawContact.length === 12) {
+    rawContact = '0' + rawContact.substring(2);
+  } else if (rawContact.length === 10 && rawContact.startsWith('9')) {
+    rawContact = '0' + rawContact;
+  }
+  contactInput.value = rawContact;
+  var contact = rawContact;
+  if (!contact || !/^09\d{9}$/.test(contact)) {
+    showError('contact'); valid = false;
+    if (!firstInvalid) firstInvalid = 'contact';
+  }
+
+  var day = document.getElementById('day').value;
+  if (!day) {
+    showError('day'); valid = false;
+    if (!firstInvalid) firstInvalid = 'day';
+  }
+
+  var time = document.getElementById('time').value;
+  if (!time) {
+    showError('time'); valid = false;
+    if (!firstInvalid) firstInvalid = 'time';
+  }
+
+  var companions = document.getElementById('companions').value;
+  if (companions === '' || isNaN(companions) || parseInt(companions) < 0 || parseInt(companions) > 20) {
+    showError('companions'); valid = false;
+    if (!firstInvalid) firstInvalid = 'companions';
+  }
+
+  var existingMachines = document.getElementById('existingMachines').value.trim();
+  if (!existingMachines) {
+    showError('existingMachines'); valid = false;
+    if (!firstInvalid) firstInvalid = 'existingMachines';
+  }
+
+  var interestedIn = document.getElementById('interestedIn').value.trim();
+  if (!interestedIn) {
+    showError('interestedIn'); valid = false;
+    if (!firstInvalid) firstInvalid = 'interestedIn';
+  }
+
+  var inviter = document.getElementById('inviter').value.trim();
+  if (!inviter) {
+    showError('inviter'); valid = false;
+    if (!firstInvalid) firstInvalid = 'inviter';
+  }
+
+  var source = document.getElementById('source').value;
+  if (!source) {
+    showError('source'); valid = false;
+    if (!firstInvalid) firstInvalid = 'source';
+  }
+
+  if (firstInvalid) {
+    document.getElementById(firstInvalid).scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  return valid;
+}
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  if (!validate()) return;
+
+  btnSubmit.disabled = true;
+  btnSubmit.textContent = 'Submitting...';
+  msgError.style.display = 'none';
+
+  var payload = {
+    event:            getEventFromSlug(),
+    eventSlug:        window.location.pathname.split('/').pop(),
+    submittedAt:      (function() {
+      var d = new Date();
+      var ph = new Date(d.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+      var dd = String(ph.getDate()).padStart(2, '0');
+      var mm = String(ph.getMonth() + 1).padStart(2, '0');
+      var yyyy = ph.getFullYear();
+      var hh = String(ph.getHours()).padStart(2, '0');
+      var min = String(ph.getMinutes()).padStart(2, '0');
+      var ss = String(ph.getSeconds()).padStart(2, '0');
+      return dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + min + ':' + ss;
+    })(),
+    eventLocation:    (function() {
+      var el = document.getElementById('eventDates');
+      return el ? (el.getAttribute('data-location') || '') : '';
+    })(),
+    email:            document.getElementById('email').value.trim(),
+    name:             document.getElementById('name').value.trim(),
+    company:          document.getElementById('company').value.trim(),
+    industry:         document.getElementById('industry').value,
+    address:          document.getElementById('address').value.trim(),
+    contact:          document.getElementById('contact').value.trim(),
+    companions:       document.getElementById('companions').value,
+    day:              document.getElementById('day').value,
+    time:             document.getElementById('time').value,
+    existingMachines: document.getElementById('existingMachines').value.trim(),
+    interestedIn:     document.getElementById('interestedIn').value.trim(),
+    inviter:          document.getElementById('inviter').value.trim(),
+    source:           document.getElementById('source').value
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  })
+  .then(function() {
+    btnSubmit.style.display = 'none';
+    msgSuccess.innerHTML = 'Registration submitted successfully! Thank you! We look forward to seeing you at the event. The form will refresh in <span id="refreshCountdown">5</span> seconds for the next registration.';
+    msgSuccess.style.display = 'block';
+    form.reset();
+    form.querySelectorAll('input, select, textarea').forEach(function(el) { el.disabled = true; });
+
+    var countdown = 5;
+    var countdownSpan = document.getElementById('refreshCountdown');
+    var timer = setInterval(function() {
+      countdown -= 1;
+      if (countdownSpan) {
+        countdownSpan.textContent = countdown;
+      }
+      if (countdown <= 0) {
+        clearInterval(timer);
+        window.location.reload();
+      }
+    }, 1000);
+  })
+  .catch(function(err) {
+    msgError.textContent = 'Could not submit registration. Please try again.';
+    msgError.style.display = 'block';
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Register Now';
+  });
+});
+</script>
+
+</body>
+</html>
+
+
