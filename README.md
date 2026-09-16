@@ -1,23 +1,23 @@
 # ES Print Group — Open House 2026 Registration System
 
-Isang kumpletong Registration and Notification System para sa **ES Print Group Open House 2026** gamit ang **Google Apps Script (GAS)**, **HTML/CSS Form**, at **Resend API**.
+A complete Registration and Notification System for the **ES Print Group Open House 2026** built with **Google Apps Script (GAS)**, **HTML/CSS Form**, and the **Resend API**.
 
 ---
 
 ## 📌 Features
 
 - **🌐 Embeddable Registration Form (`index.html`)**
-  - Malinis at responsive na user interface (swak i-embed via iframe sa Webflow, WordPress, o custom site).
-  - Built-in anti-spam protection gamit ang honeypot field at timestamp validation (walang external Captcha na kailangan).
+  - Clean and responsive user interface (ready to embed via iframe in Webflow, WordPress, or custom websites).
+  - Built-in anti-spam protection using a honeypot field and timestamp validation (no external Captcha required).
 - **📊 Multi-Sheet Event Routing (`Code.gs`)**
-  - Automatic routing ng registration data sa tamang Google Sheet base sa lungsod o keyword ng event (e.g., *Cabanatuan, Tacloban, CDO, Bacolod, Makati, Cebu*).
-  - May fallback default Google Sheet sakaling walang mag-match na keyword.
+  - Automatically routes registration data to the appropriate Google Sheet based on city or event keyword (e.g., *Cabanatuan, Tacloban, CDO, Bacolod, Makati, Cebu*).
+  - Includes a fallback default Google Sheet if no keyword matches.
 - **✉️ Dynamic Email Notifications via Resend API**
-  - **Attendee Confirmation Email:** Agad na ipinapadala sa nag-register kasama ang event details at schedule.
-  - **Admin Notification Email:** Alerto para sa sales/admin team kapag may bagong registration.
-  - Dynamic sender name base sa mismong Event Title.
+  - **Attendee Confirmation Email:** Instantly sent to the registrant with event details and schedule.
+  - **Admin Notification Email:** Real-time alert for the sales/admin team upon every new registration.
+  - Dynamic sender name matching the Event Title.
 - **☑️ Google Sheets Follow-Up Triggers**
-  - May interactive checkbox triggers sa Google Sheet:
+  - Interactive checkbox triggers directly inside Google Sheets:
     - **Column Q:** Reminder (H-1 / Day before the visit)
     - **Column R:** Thank You / Feedback email
     - **Column S:** No-Show / Missed visit email
@@ -29,17 +29,17 @@ Isang kumpletong Registration and Notification System para sa **ES Print Group O
 ```text
 ├── Code.gs        # Google Apps Script backend logic, routing, & Resend API integrations
 ├── index.html     # Registration form frontend interface & client-side validation
-└── README.md      # Documentation at deployment guide
+└── README.md      # Documentation and deployment guide
 ```
 
 ---
 
 ## ⚙️ Configuration
 
-Buksan ang [Code.gs](Code.gs) at i-configure ang mga sumusunod na constants:
+Open [Code.gs](Code.gs) and configure the following constants:
 
 ### 1. Sheet Routing (`SHEET_ROUTES`)
-I-map ang bawat lungsod/keyword sa kaukulang Google Spreadsheet ID:
+Map each city/keyword to its corresponding Google Spreadsheet ID:
 ```javascript
 const SHEET_ROUTES = [            
   { keyword: 'CABANATUAN', sheetId: 'YOUR_SPREADSHEET_ID_HERE' },
@@ -55,7 +55,7 @@ const NOTIFY_EMAIL = 'sales@esprintmedia.com';
 ```
 
 ### 2. Resend API Keys & Sender Email
-Siguraduhing naka-set ang iyong verified sender domain at API key:
+Ensure your verified sender domain and API key are configured:
 ```javascript
 const RESEND_API_KEY = 're_xxxxxxxxxxxx';
 const SENDER_EMAIL   = 'events@yourdomain.com';
@@ -65,19 +65,19 @@ const SENDER_EMAIL   = 'events@yourdomain.com';
 
 ## 🚀 Deployment Guide (Google Apps Script)
 
-1. **Gumawa ng bagong Google Apps Script Project:**
-   - Pumunta sa [script.google.com](https://script.google.com).
-   - Lumikha ng **New Project**.
-2. **Kopyahin ang mga Files:**
-   - I-paste ang laman ng `Code.gs` sa script editor.
-   - Magdagdag ng HTML file na pinangalanang `registration-form` (o `index`) at i-paste ang laman ng `index.html`.
-3. **I-deploy bilang Web App:**
-   - I-click ang **Deploy** > **New deployment**.
-   - Piliin ang uri: **Web app**.
+1. **Create a new Google Apps Script Project:**
+   - Go to [script.google.com](https://script.google.com).
+   - Click **New Project**.
+2. **Copy the Project Files:**
+   - Paste the contents of `Code.gs` into the script editor.
+   - Add an HTML file named `registration-form` (or `index`) and paste the contents of `index.html`.
+3. **Deploy as a Web App:**
+   - Click **Deploy** > **New deployment**.
+   - Select type: **Web app**.
    - **Execute as:** `Me (your Google account)`.
    - **Who has access:** `Anyone`.
-   - I-click ang **Deploy** at kopyahin ang Web App URL.
-4. **I-embed sa Webflow / Website:**
+   - Click **Deploy** and copy the Web App URL.
+4. **Embed in Webflow / Website:**
    ```html
    <iframe 
      src="YOUR_WEB_APP_URL" 
